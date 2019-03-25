@@ -1,0 +1,21 @@
+{
+  "name": "square",
+  "version": "1.0.0",
+  "description": "Square project",
+  "scripts": {
+    "mongo:start": "docker run --name realworld-mongo -p 27017:27017 mongo & sleep 5",
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
+    "mongo:stop": "docker stop realworld-mongo && docker rm realworld-mongo"
+  },
+  "author": "",
+  "license": "EPITECH",
+  "devDependencies": {},
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.19",
+    "nodemon": "^1.18.10"
+  }
+}
