@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const Company = require('./models/Company');
 
 mongoose.connect("mongodb://localhost:27017/Square").then(
     () => {console.log('Database connection is successful') },

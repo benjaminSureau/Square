@@ -2,6 +2,9 @@ var express = require('express')
     , router = express.Router();
 
 router.use('/users', require('./users'));
+router.use('/companies', require('./companies'));
+
+
 /*router.use('/profiles', require('./profiles'));
 router.use('/articles', require('./articles'));
 router.use('/tags', require('./tags'));*/
