@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
-    name: String
+    firstName: String,
+    lastName: String,
+    birthDate: Date,
+    cityOfResidence: String
+
 }, {
     timestamps: true
 });
