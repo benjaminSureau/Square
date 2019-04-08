@@ -1,8 +1,12 @@
-var express = require('express')
+const express = require('express')
     , router = express.Router();
 
 router.use('/users', require('./users'));
 router.use('/companies', require('./companies'));
+router.use('/notifications', require('./notifications'));
+router.use('/hobbies', require('./hobbies'));
+router.use('/skills', require('./skills'));
+router.use('/qualifications', require('./qualifications'));
 
 
 /*router.use('/profiles', require('./profiles'));
