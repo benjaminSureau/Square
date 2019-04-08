@@ -12,6 +12,13 @@ router.post('/', function(req, res, next){
     }).catch(next);
 });
 
+router.get('/', function(req, res, next){
+    Skill.find({}, function (err, skills) {
+        return res.send(skills);
+    }).catch(next);
+
+});
+
 router.get('/:skillId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.skillId)) {
         Skill.findById(req.params.id).then(function (skill) {

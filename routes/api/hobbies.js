@@ -12,6 +12,13 @@ router.post('/', function(req, res, next){
     }).catch(next);
 });
 
+router.get('/', function(req, res, next){
+    Hobby.find({}, function (err, hobbies) {
+        return res.send(hobbies);
+    }).catch(next);
+
+});
+
 router.get('/:hobbyId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.hobbyId)) {
         Hobby.findById(req.params.id).then(function (hobby) {

@@ -15,6 +15,13 @@ router.post('/', function(req, res, next){
     }).catch(next);
 });
 
+router.get('/', function(req, res, next){
+    Company.find({}, function (err, companies) {
+        return res.send(companies);
+    }).catch(next);
+
+});
+
 router.get('/:companyId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.companyId)) {
         Company.findById(req.params.companyId).then(function (company) {

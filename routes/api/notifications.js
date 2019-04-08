@@ -14,6 +14,13 @@ router.post('/', function(req, res, next){
         }).catch(next);
 });
 
+router.get('/', function(req, res, next){
+    Notification.find({}, function (err, notifications) {
+        return res.send(notifications);
+    }).catch(next);
+
+});
+
 router.get('/:notificationId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.notificationId)) {
         Notification.findById(req.params.notificationId).then(function (notification) {

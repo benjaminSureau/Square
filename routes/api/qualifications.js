@@ -13,6 +13,13 @@ router.post('/', function(req, res, next){
     }).catch(next);
 });
 
+router.get('/', function(req, res, next){
+    Qualification.find({}, function (err, qualifications) {
+        return res.send(qualifications);
+    }).catch(next);
+
+});
+
 router.get('/:qualificationId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.qualificationId)) {
         Qualification.findById(req.params.id).then(function (qualification) {

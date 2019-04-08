@@ -15,6 +15,13 @@ router.post('/', function(req, res, next){
     }).catch(next);
 });
 
+router.get('/', function(req, res, next){
+    User.find({}, function (err, users) {
+        return res.send(users);
+    }).catch(next);
+
+});
+
 router.get('/:userId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.userId)) {
         User.findById(req.params.userId).then(function (user) {
