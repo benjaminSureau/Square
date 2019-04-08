@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var router = require('express').Router();
-var Company = mongoose.model('Company');
+const mongoose = require('mongoose');
+const router = require('express').Router();
+const Company = mongoose.model('Company');
 
 router.post('/', function(req, res, next){
-    var company = new Company();
+    let company = new Company();
 
     company.name = req.body.name;
     company.siret = req.body.siret;
@@ -17,7 +17,7 @@ router.post('/', function(req, res, next){
 
 router.get('/:companyId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.companyId)) {
-        Company.findById(req.params.id).then(function (company) {
+        Company.findById(req.params.companyId).then(function (company) {
             if (!company) {
                 return res.sendStatus(404);
             }
