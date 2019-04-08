@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var router = require('express').Router();
-var User = mongoose.model('User');
+const mongoose = require('mongoose');
+const router = require('express').Router();
+const User = mongoose.model('User');
 
 router.post('/', function(req, res, next){
-    var user = new User();
+    let user = new User();
 
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
@@ -17,7 +17,7 @@ router.post('/', function(req, res, next){
 
 router.get('/:userId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.userId)) {
-        User.findById(req.params.id).then(function (user) {
+        User.findById(req.params.userId).then(function (user) {
             if (!user) {
                 return res.sendStatus(404);
             }
