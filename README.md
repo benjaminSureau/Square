@@ -20,10 +20,10 @@ Run the project ``npm start``
 
 To start the service execute this command :
 
-``docker-compose down`` -> Stop Process
-``docker-compose build`` -> Build the container
-``docker-compose up -d mongo`` -> Start Mongo DataBase
-``docker-compose up web`` -> Start Web Api
+* ``docker-compose down`` -> Stop Process
+* ``docker-compose build`` -> Build the container
+* ``docker-compose up -d mongo`` -> Start Mongo DataBase
+* ``docker-compose up web`` -> Start Web Api
 
 
 ###API
