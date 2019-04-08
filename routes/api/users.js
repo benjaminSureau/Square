@@ -1,17 +1,47 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const User = mongoose.model('User');
+const Skill = mongoose.model('Skill');
+const Hobby = mongoose.model('Hobby');
 
 router.post('/', function(req, res, next){
     let user = new User();
-
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
     user.birthDate = req.body.birthDate;
     user.cityOfResidence = req.body.cityOfResidence;
 
+    if (typeof req.body.skills !== 'undefined')  {
+        req.body.skills.forEach(function (obj) {
+            if (typeof obj._id == 'undefined') {
+                let skill = new Skill();
+                skill.name = obj.name;
+                skill.save().then(function (skill) {
+                    user.skills.push(skill);
+                })
+            } else {
+                user.skills.push(obj);
+            }
+        })
+    }
+
+    if (typeof req.body.hobbies !== 'undefined')  {
+        req.body.hobbies.forEach(function (obj) {
+            if (typeof obj._id == 'undefined') {
+                let hobby = new Hobby();
+                hobby.name = obj.name;
+                hobby.save().then(function (hobby) {
+                    user.hobbies.push(hobby);
+                })
+            } else {
+                user.hobbies.push(obj);
+            }
+        })
+    }
+
+
     user.save().then(function(){
-        return res.json({user: user});
+        return res.status(201).send({user: user});
     }).catch(next);
 });
 
