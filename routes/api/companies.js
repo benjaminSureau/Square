@@ -10,8 +10,12 @@ router.post('/', function(req, res, next){
     company.siren = req.body.siren;
     company.description = req.body.description;
 
-    company.save().then(function(){
-        return res.json({company: company});
+    if (Array.isArray(req.body.activityDomains))  {
+        company.activityDomains = req.body.activityDomains;
+    }
+
+    company.save().then(function(company){
+        return res.status(201).send({company: company});
     }).catch(next);
 });
 
@@ -41,7 +45,7 @@ router.put('/:companyId', function(req, res, next){
             if (!company) {
                 return res.sendStatus(404);
             }
-
+            company.activityDomain = [];
             // only update fields that were actually passed...
             if (typeof req.body.name !== 'undefined') {
                 company.name = req.body.name;
@@ -55,6 +59,11 @@ router.put('/:companyId', function(req, res, next){
             if (typeof req.body.description !== 'undefined') {
                 company.description = req.body.description;
             }
+
+            if (Array.isArray(req.body.activityDomains))  {
+                company.activityDomains = req.body.activityDomains;
+            }
+
             return company.save().then(function () {
                 return res.json({company: company});
             });

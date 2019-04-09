@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const User = mongoose.model('User');
-const Skill = mongoose.model('Skill');
-const Hobby = mongoose.model('Hobby');
-const Qualification = mongoose.model('Qualification');
 
 router.post('/', function(req, res, next){
     let user = new User();
@@ -12,49 +9,17 @@ router.post('/', function(req, res, next){
     user.birthDate = req.body.birthDate;
     user.cityOfResidence = req.body.cityOfResidence;
 
-    if (typeof req.body.skills !== 'undefined')  {
-        req.body.skills.forEach(function (obj) {
-            if (typeof obj._id == 'undefined') {
-                let skill = new Skill();
-                skill.name = obj.name;
-                skill.save().then(function (skill) {
-                    user.skills.push(skill);
-                })
-            } else {
-                user.skills.push(obj);
-            }
-        })
+    if (Array.isArray(req.body.skills)) {
+        user.skills = req.body.skills;
     }
 
-    if (typeof req.body.hobbies !== 'undefined')  {
-        req.body.hobbies.forEach(function (obj) {
-            if (typeof obj._id == 'undefined') {
-                let hobby = new Hobby();
-                hobby.name = obj.name;
-                hobby.save().then(function (hobby) {
-                    user.hobbies.push(hobby);
-                })
-            } else {
-                user.hobbies.push(obj);
-            }
-        })
+    if (Array.isArray(req.body.hobbies)) {
+        user.hobbies = req.body.hobbies;
     }
 
-    if (typeof req.body.qualifications !== 'undefined')  {
-        req.body.qualifications.forEach(function (obj) {
-            if (typeof obj._id == 'undefined') {
-                let qualification = new Qualification();
-                qualification.name = obj.name;
-                qualification.description = obj.description;
-                qualification.save().then(function (qualification) {
-                    user.qualifications.push(qualification);
-                })
-            } else {
-                user.qualifications.push(obj);
-            }
-        })
+    if (Array.isArray(req.body.qualifications)) {
+        user.qualifications = req.body.qualifications;
     }
-
 
     user.save().then(function(){
         return res.status(201).send({user: user});
@@ -102,47 +67,16 @@ router.put('/:userId', function(req, res, next){
                 user.cityOfResidence = req.body.cityOfResidence;
             }
 
-            if (typeof req.body.skills !== 'undefined')  {
-                req.body.skills.forEach(function (obj) {
-                    if (typeof obj._id == 'undefined') {
-                        let skill = new Skill();
-                        skill.name = obj.name;
-                        skill.save().then(function (skill) {
-                            user.skills.push(skill);
-                        })
-                    } else {
-                        user.skills.push(obj);
-                    }
-                })
+            if (Array.isArray(req.body.skills)) {
+                user.skills = req.body.skills;
             }
 
-            if (typeof req.body.hobbies !== 'undefined')  {
-                req.body.hobbies.forEach(function (obj) {
-                    if (typeof obj._id == 'undefined') {
-                        let hobby = new Hobby();
-                        hobby.name = obj.name;
-                        hobby.save().then(function (hobby) {
-                            user.hobbies.push(hobby);
-                        })
-                    } else {
-                        user.hobbies.push(obj);
-                    }
-                })
+            if (Array.isArray(req.body.hobbies)) {
+                user.hobbies = req.body.hobbies;
             }
 
-            if (typeof req.body.qualifications !== 'undefined')  {
-                req.body.qualifications.forEach(function (obj) {
-                    if (typeof obj._id == 'undefined') {
-                        let qualification = new Qualification();
-                        qualification.name = obj.name;
-                        qualification.description = obj.description;
-                        qualification.save().then(function (qualification) {
-                            user.qualifications.push(qualification);
-                        })
-                    } else {
-                        user.qualifications.push(obj);
-                    }
-                })
+            if (Array.isArray(req.body.qualifications)) {
+                user.qualifications = req.body.qualifications;
             }
 
             return user.save().then(function () {
