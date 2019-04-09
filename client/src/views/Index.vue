@@ -45,9 +45,10 @@
         <div class="form-group">
           <label for="name"></label>
           <input
-            v-model="newHobby.name"
+            v-model="newHobby"
             type="text"
             class="form-control"
+            @keyup.enter="addHobby"
             id="name"
             placeholder="Enter a hobby" required>
 
@@ -70,9 +71,7 @@
       error: "",
       users: [],
       hobbies: [],
-      newHobby: {
-        name: ''
-      }
+      newHobby: ''
     }),
 
     mounted() {
@@ -97,9 +96,12 @@
     },
     methods: {
       addHobby() {
+        var hobbyToAdd = {
+          name: this.newHobby
+        };
         fetch(API_URL_HOBBY, {
           method: "POST",
-          body: JSON.stringify(this.newHobby),
+          body: JSON.stringify(hobbyToAdd),
           headers: {
             "content-type": "application/json"
           }
@@ -115,8 +117,9 @@
               this.$router.push('about');
             } else {
               this.error = "";
-              this.hobbies.push(this.newHobby);
+              this.hobbies.push(hobbyToAdd);
               this.$router.push('home');
+              this.newHobby = '';
             }
           });
       }
