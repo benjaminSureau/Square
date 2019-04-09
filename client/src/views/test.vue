@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="addMessage" class="mb-3">
+    <form @submit.prevent="addUser" class="mb-3">
       <div v-if="error" class="alert alert-dismissible alert-warning">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <h4 class="alert-heading">Error!</h4>
@@ -9,53 +9,56 @@
       <div class="form-group">
         <label for="firstName">firstName</label>
         <input
-          v-model="message.firstName"
+          v-model="user.firstName"
           type="text"
           class="form-control"
-          id="firstName" required>
+          id="firstName"
+          placeholder="Enter a firstName" required>
+
       </div>
       <div class="form-group">
         <label for="lastName">lastName</label>
         <input
-          v-model="message.lastName"
+          v-model="user.lastName"
           type="text"
           class="form-control"
           id="lastName"
           placeholder="Enter a lastName" required>
       </div>
       <div class="form-group">
-        <label for="message">Message</label>
-        <textarea
-          v-model="message.message"
-          class="form-control"
-          id="message"
-          rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="imageURL">Image URL</label>
+        <label for="lastName">BirthDate</label>
         <input
-          v-model="message.imageURL"
-          type="url"
+          v-model="user.birthDate"
+          type="text"
           class="form-control"
-          id="imageURL"
-          placeholder="Enter URL to an image">
+          id="birthDate"
+          placeholder="Enter a BirthDate" required>
       </div>
-      <button type="submit" class="btn btn-primary">Add Message</button>
+      <button type="submit" class="btn btn-primary">Add user</button>
     </form>
-    <div class="list-unstyled" v-for="message in reversedMessages" :key="message._id">
-      <li class="media">
-        <div class="media-body">
-          <a class="mt-0 mb-1">{{message.firstName}} </a>
-          <a class="mt-0 mb-1">{{message.lastName}}</a>
-          {{message.message}}
-          <br />
-          <small>{{message.created}}</small>
-        </div>
-      </li>
-      <hr>
+    <div>
+      <table>
+            <thead>
+              <tr>
+
+                 <td>firstName</td>
+                 <td>lastName</td>
+                 <td>birthDate</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="list-unstyled" v-for="user in users" :key="user._id">
+                  <td>{{user.firstName}}</td>
+                  <td>{{user.lastName}}</td>
+                  <td>{{user.birthDate}}</td>
+              </tr>
+            </tbody>
+          </table>
     </div>
+
   </div>
 </template>
+
 
 <script>
 const API_URL = "http://localhost:4000/api/users/";
@@ -64,32 +67,31 @@ export default {
   name: "home",
   data: () => ({
     error: "",
-    messages: [],
-    message: {
-      firstName: "Enter a screen name",
+    users: [],
+    user: {
+      firstName: "",
       lastName: "",
-      message: "",
-      imageURL: ""
+      birthDate: ""
     }
   }),
   computed: {
-    reversedMessages() {
-      return this.messages.slice().reverse();
+    ListUsers() {
+      return this.users.slice().reverse();
     }
   },
   mounted() {
     fetch(API_URL)
       .then(response => response.json())
       .then(result => {
-        this.messages = result;
+        this.users = result;
       });
   },
   methods: {
-    addMessage() {
-      console.log(this.message);
+    addUser() {
+      console.log(this.user);
       fetch(API_URL, {
         method: "POST",
-        body: JSON.stringify(this.message),
+        body: JSON.stringify(this.user),
         headers: {
           "content-type": "application/json"
         }
@@ -99,23 +101,24 @@ export default {
           if (result.details) {
             // there was an error...
             const error = result.details
-              .map(detail => detail.message)
+              .map(detail => detail.user)
               .join(". ");
             this.error = error;
           } else {
             this.error = "";
-            this.showMessageForm = false;
-            this.messages.push(result);
+            this.showUserForm = false;
+            this.users.push(result);
           }
         });
     }
   }
+
+
+
+
 };
 </script>
 
+
 <style>
-img {
-  max-width: 300px;
-  height: auto;
-}
 </style>
