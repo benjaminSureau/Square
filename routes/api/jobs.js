@@ -65,9 +65,20 @@ router.put('/:jobId', function(req, res, next){
             if (typeof req.body.name !== 'undefined') {
                 job.name = req.body.name;
             }
-            return job.save().then(function () {
-                return res.json({job: job});
-            });
+            if (typeof req.body.companyId !== 'undefined' &&
+                mongoose.Types.ObjectId.isValid(req.params.companyId))  {
+                Company.findById(req.body.companyId).then(function (res) {
+                    if (!res) {
+                        return res.sendStatus(400);
+                    }
+                    job.companyId = new Object(req.body.companyId);
+                    job.save().then(function(){
+                        return res.json({job: job});
+                    }).catch(next);
+                })
+            } else {
+                return res.sendStatus(400);
+            }
         }).catch(next);
     } else {
         return res.sendStatus(400);

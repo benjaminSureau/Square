@@ -11,10 +11,12 @@ const Skill = require('./models/Skill');
 const Qualification = require('./models/Qualification');
 const Job = require('./models/Job');
 
-mongoose.connect("mongodb://localhost:27017/Square").then(
+/*mongoose.connect("mongodb://localhost:27017/Square").then(
     () => {console.log('Database connection is successful') },
     err => { console.log('Error when connecting to the database'+ err)}
-);
+);*/
+
+mongoose.connect('mongodb://localhost:27017/Square', { useNewUrlParser: true });
 var app = express();
 app.use(cors());
 

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const Company = mongoose.model('Company');
-const ActivityDomain = mongoose.model('ActivityDomain');
 
 router.post('/', function(req, res, next){
     let company = new Company();
@@ -11,13 +10,10 @@ router.post('/', function(req, res, next){
     company.siren = req.body.siren;
     company.description = req.body.description;
 
-    if (typeof req.body.activityDomains !== 'undefined')  {
-        req.body.activityDomains.forEach(function (obj) {
-            if (typeof obj._id !== 'undefined') {
-                company.activityDomains.push(obj);
-            }
-        });
+    if (Array.isArray(req.body.activityDomains))  {
+        company.activityDomains = req.body.activityDomains;
     }
+
     company.save().then(function(company){
         return res.status(201).send({company: company});
     }).catch(next);
@@ -64,12 +60,8 @@ router.put('/:companyId', function(req, res, next){
                 company.description = req.body.description;
             }
 
-            if (typeof req.body.activityDomains !== 'undefined')  {
-                req.body.activityDomains.forEach(function (obj) {
-                    if (typeof obj._id !== 'undefined') {
-                        company.activityDomains.push(obj);
-                    }
-                });
+            if (Array.isArray(req.body.activityDomains))  {
+                company.activityDomains = req.body.activityDomains;
             }
 
             return company.save().then(function () {

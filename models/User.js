@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const skillSchema = require('./Skill.js').schema;
 const hobbySchema = require('./Hobby.js').schema;
+const qualificationsSchema = require('./Qualification.js').schema;
 
 const UserSchema = mongoose.Schema({
     firstName: String,
@@ -8,7 +9,8 @@ const UserSchema = mongoose.Schema({
     birthDate: Date,
     cityOfResidence: String,
     skills: [skillSchema],
-    hobbies: [hobbySchema]
+    hobbies: [hobbySchema],
+    qualifications: [qualificationsSchema]
 
 }, {
     timestamps: true
