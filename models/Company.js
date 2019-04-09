@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
+const activiDomainSchema = require('./ActivityDomain.js').schema;
 
 const CompanySchema = mongoose.Schema({
     name: String,
     siret: String,
     siren: String,
-    description: String
+    description: String,
+    activityDomains: [activiDomainSchema]
 
 }, {
     timestamps: true

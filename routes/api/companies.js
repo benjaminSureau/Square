@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const Company = mongoose.model('Company');
+const ActivityDomain = mongoose.model('ActivityDomain');
 
 router.post('/', function(req, res, next){
     let company = new Company();
@@ -10,8 +11,15 @@ router.post('/', function(req, res, next){
     company.siren = req.body.siren;
     company.description = req.body.description;
 
-    company.save().then(function(){
-        return res.json({company: company});
+    if (typeof req.body.activityDomains !== 'undefined')  {
+        req.body.activityDomains.forEach(function (obj) {
+            if (typeof obj._id !== 'undefined') {
+                company.activityDomains.push(obj);
+            }
+        });
+    }
+    company.save().then(function(company){
+        return res.status(201).send({company: company});
     }).catch(next);
 });
 
@@ -41,7 +49,7 @@ router.put('/:companyId', function(req, res, next){
             if (!company) {
                 return res.sendStatus(404);
             }
-
+            company.activityDomain = [];
             // only update fields that were actually passed...
             if (typeof req.body.name !== 'undefined') {
                 company.name = req.body.name;
@@ -55,6 +63,15 @@ router.put('/:companyId', function(req, res, next){
             if (typeof req.body.description !== 'undefined') {
                 company.description = req.body.description;
             }
+
+            if (typeof req.body.activityDomains !== 'undefined')  {
+                req.body.activityDomains.forEach(function (obj) {
+                    if (typeof obj._id !== 'undefined') {
+                        company.activityDomains.push(obj);
+                    }
+                });
+            }
+
             return company.save().then(function () {
                 return res.json({company: company});
             });

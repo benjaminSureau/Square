@@ -7,6 +7,7 @@ router.use('/notifications', require('./notifications'));
 router.use('/hobbies', require('./hobbies'));
 router.use('/skills', require('./skills'));
 router.use('/qualifications', require('./qualifications'));
+router.use('/jobs', require('./jobs'));
 
 
 /*router.use('/profiles', require('./profiles'));

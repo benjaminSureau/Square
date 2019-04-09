@@ -9,6 +9,7 @@ const Notification = require('./models/Notification');
 const Hobby = require('./models/Hobby');
 const Skill = require('./models/Skill');
 const Qualification = require('./models/Qualification');
+const Job = require('./models/Job');
 
 mongoose.connect("mongodb://localhost:27017/Square").then(
     () => {console.log('Database connection is successful') },
