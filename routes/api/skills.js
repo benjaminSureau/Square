@@ -2,24 +2,24 @@ var mongoose = require('mongoose');
 var router = require('express').Router();
 var Skill = mongoose.model('Skill');
 
-router.post('/', function(req, res, next){
+router.post('/', function (req, res, next) {
     var skill = new Skill();
 
     skill.name = req.body.name;
 
-    skill.save().then(function(){
+    skill.save().then(function () {
         return res.json({skill: skill});
     }).catch(next);
 });
 
-router.get('/', function(req, res, next){
+router.get('/', function (req, res, next) {
     Skill.find({}, function (err, skills) {
         return res.send(skills);
     }).catch(next);
 
 });
 
-router.get('/:skillId', function(req, res, next){
+router.get('/:skillId', function (req, res, next) {
     if (mongoose.Types.ObjectId.isValid(req.params.skillId)) {
         Skill.findById(req.params.id).then(function (skill) {
             if (!skill) {
@@ -33,16 +33,16 @@ router.get('/:skillId', function(req, res, next){
 });
 
 
-router.get('/', function(req, res){
+router.get('/', function (req, res) {
     Skill.find({}, function (error, skills) {
-        if(error) {
+        if (error) {
             return res.sendStatus(400);
         }
         return res.json({skill: skills});
     });
 });
 
-router.put('/:skillId', function(req, res, next){
+router.put('/:skillId', function (req, res, next) {
     if (mongoose.Types.ObjectId.isValid(req.params.skillId)) {
         Skill.findById(req.params.skillId).then(function (skill) {
             if (!skill) {
@@ -61,7 +61,7 @@ router.put('/:skillId', function(req, res, next){
     }
 });
 
-router.delete('/:skillId', function(req, res, next){
+router.delete('/:skillId', function (req, res, next) {
     if (mongoose.Types.ObjectId.isValid(req.params.skillId)) {
         Skill.deleteOne({
             _id: req.params.skillId

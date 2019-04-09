@@ -90,17 +90,17 @@ const API_URL_HOBBY = "http://localhost:4000/api/hobbies/";
 export default {
   name: "home",
   data: () => ({
-    error: "",
+    error: '',
     users: [],
     hobbies: [],
     user: {
-      firstName: "",
-      lastName: "",
-      birthDate: "",
+      firstName: '',
+      lastName: '',
+      birthDate: '',
       hobbies: []
     },
     hobby: {
-      name: "",
+      name: '',
     }
 
   }),
@@ -135,7 +135,7 @@ export default {
               .join(". ");
             this.error = error;
           } else {
-            this.error = "";
+            this.error = '';
             this.showUserForm = false;
             this.users.push(result);
              this.$router.push('home');
@@ -163,21 +163,14 @@ export default {
             this.$router.push('about');
 
           } else {
-            this.error = "";
-            this.showUserForm = false;
+            this.error = '';
             this.hobbies.push(result);
             this.$router.push('home');
           }
         });
-    }
-  }
-
-
-
-
+    },
+  },
 };
 </script>
-
-
 <style>
 </style>
