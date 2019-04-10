@@ -7,7 +7,6 @@ function getBySkills(skills) {
             "skills.name": {$in: skills}
         }).
         sort({ firstName: -1 }).then(function (result) {
-            console.log(result);
             resolve({"status" : "OK", "content" : result});
         }).catch(function (err) {
             reject({"status": "KO"});
@@ -21,7 +20,6 @@ function getByHobbies(hobbies) {
             "hobbies.name": {$in: hobbies}
         }).
         sort({ firstName: -1 }).then(function (result) {
-            console.log(result);
             resolve({"status" : "OK", "content" : result});
         }).catch(function (err) {
             reject({"status": "KO"});
@@ -35,7 +33,6 @@ function getByQualifications(qualifications) {
             "qualifications.name": {$in: qualifications}
         }).
         sort({ firstName: -1 }).then(function (result) {
-            console.log(result);
             resolve({"status" : "OK", "content" : result});
         }).catch(function (err) {
             reject({"status": "KO"});
