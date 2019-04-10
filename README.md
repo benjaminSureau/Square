@@ -23,7 +23,9 @@ To start the service execute this command :
 * ``docker-compose down`` -> Stop Process
 * ``docker-compose build`` -> Build the container
 * ``docker-compose up -d mongo`` -> Start Mongo DataBase
-* ``docker-compose up web`` -> Start Web Api
+* ``docker-compose up web`` -> Start Web Api And Web Client
+
+To delete the docker-compose : ``docker-compose rm``
 
 Important : to use the container docker with node you must change the connection to mongo database :
 Change this line in app.js : ``mongoose.connect("mongodb://localhost:27017/Square")`` to ``mongoose.connect("mongodb://mongo:27017/Square")``

@@ -6,11 +6,15 @@
     "mongo:start": "docker run --name realworld-mongo -p 27017:27017 mongo & sleep 5",
     "start": "node ./app.js",
     "dev": "nodemon ./app.js",
-    "mongo:stop": "docker stop realworld-mongo && docker rm realworld-mongo"
+    "mongo:stop": "docker stop realworld-mongo && docker rm realworld-mongo",
+    "test": "mocha"
   },
   "author": "",
   "license": "EPITECH",
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "*"
+  },
   "dependencies": {
     "@vue/cli": "^3.5.5",
     "body-parser": "^1.18.3",
