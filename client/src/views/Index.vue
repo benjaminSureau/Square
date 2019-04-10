@@ -1,29 +1,47 @@
 <template>
-    <div class="container">
+    <div class="container" style="margin-right: 0px; margin-left: 0px; max-width: 100%!important;">
         <div class="row">
-        <div class="col">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th scope="col">firstName</th>
-                    <th scope="col">lastName</th>
-                    <th scope="col">birthDate</th>
-                    <th scope="col">cityOfResidence</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="message in users" :key="message._id" >
-                    <td scope="row">{{message.firstName}}</td>
-                    <td>{{message.lastName}}</td>
-                    <td>{{message.birthDate}}</td>
-                    <td>{{message.cityOfResidence}}</td>
+            <div class="col-lg-8">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">firstName</th>
+                        <th scope="col">lastName</th>
+                        <th scope="col">birthDate</th>
+                        <th scope="col">cityOfResidence</th>
+                        <th scope="col">Hobbies</th>
+                        <th scope="col">Skill</th>
+                        <th scope="col">Qualification</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="message in users" :key="message._id" >
+                        <td scope="row">{{message.firstName}}</td>
+                        <td>{{message.lastName}}</td>
+                        <td>{{message.birthDate}}</td>
+                        <td>{{message.cityOfResidence}}</td>
+                        <td>
+                            <div v-for="hobby in message.hobbies" :key="hobby._id">
+                                {{hobby.name}}
+                            </div>
+                        </td>
+                        <td>
+                            <div v-for="skill in message.skills" :key="skill._id">
+                                {{skill.name}}
+                            </div>
+                        </td>
+                        <td>
+                            <div v-for="qualif in message.qualifications" :key="qualif._id">
+                                {{qualif.name}}
+                            </div>
+                        </td>
 
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <div class="col">
+            <div class="col-lg-4">
                 <form @submit.prevent="addUser" class="mb-3">
                     <div v-if="error" class="alert alert-dismissible alert-warning">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -225,7 +243,9 @@
 
 
         </div>
-  </div>
+        <hr>
+
+    </div>
 </template>
 
 <script>
