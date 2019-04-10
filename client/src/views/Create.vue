@@ -40,24 +40,24 @@
             v-model="user.cityOfResidence"
             type="text"
             class="form-control"
-            id="birthDate"
+            id="cityOfResidence"
             placeholder="Enter a city Of Residence" required>
         </div>
 
         <div class="form-group">
-          <label for="hobbies">hobbies</label>
-          <input type="checkbox" id="jack" value="Jack" v-model="hobbies">
-            <label for="jack">Jack</label>
-            <input type="checkbox" id="john" value="John" v-model="hobbies">
-            <label for="john">John</label>
-            <input type="checkbox" id="mike" value="Mike" v-model="hobbies">
-            <label for="mike">Mike</label>
+          <label>hobbies</label>
+          <div v-for="currHobby in listHobbies" :key="currHobby._id">
+            <input type="checkbox" :id="currHobby.name" :value="currHobby" v-model="user.hobbies">
+            <label :for="currHobby.name">{{currHobby.name}}</label>
+          </div>
+
         </div>
 
         <button type="submit" class="btn btn-primary">Add user</button>
       </form>
     </div>
     <br>
+    <span>Noms cochés : {{ user.hobbies }}</span>
 
 
     <div>
@@ -92,7 +92,8 @@ export default {
   data: () => ({
     error: '',
     users: [],
-    hobbies: [],
+    listHobbies: [],
+    checkedNames: [],
     user: {
       firstName: '',
       lastName: '',
@@ -101,7 +102,8 @@ export default {
     },
     hobby: {
       name: '',
-    }
+    },
+    newHobby: ''
 
   }),
   computed: {
@@ -111,10 +113,15 @@ export default {
   },
   mounted() {
     fetch(API_URL_USER)
-      .then(response => response.json())
-      .then(result => {
-        this.users = result;
+            .then(response => response.json())
+            .then(result => {
+              this.users = result;
       });
+    fetch(API_URL_HOBBY)
+            .then(response => response.json())
+            .then(result => {
+              this.listHobbies = result;
+            });
   },
   methods: {
     addUser() {
@@ -138,16 +145,19 @@ export default {
             this.error = '';
             this.showUserForm = false;
             this.users.push(result);
-             this.$router.push('home');
+            //this.$router.push('home');
 
           }
         });
     },
     addHobby() {
+      var hobbyToAdd = {
+        name: this.newHobby
+      };
       console.log(this.hobby);
       fetch(API_URL_HOBBY, {
         method: "POST",
-        body: JSON.stringify(this.hobby),
+        body: JSON.stringify(hobbyToAdd),
         headers: {
           "content-type": "application/json"
         }
@@ -164,13 +174,16 @@ export default {
 
           } else {
             this.error = '';
-            this.hobbies.push(result);
-            this.$router.push('home');
+            this.listHobbies.push(hobbyToAdd);
+            //this.$router.push('home');
+            this.newHobby = '';
           }
         });
     },
   },
 };
 </script>
+
+
 <style>
 </style>
