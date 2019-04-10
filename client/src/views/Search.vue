@@ -10,29 +10,54 @@
             <p class="mb-0">{{error}}</p>
           </div>
 
-          <div class="row">
-            <div class="form-group col">
-              <label>Hobbies</label>
-              <div v-for="currentHobby in listHobbies" :key="currentHobby._id">
-                <input type="checkbox" :id="currentHobby.name" :value="currentHobby" v-model="query.hobbies">
-                <label :for="currentHobby.name">{{currentHobby.name}}</label>
-              </div>
-            </div>
-            <div class="form-group col">
-              <label>Skills</label>
-              <div v-for="currentSkill in listSkills" :key="currentSkill._id">
-                <input type="checkbox" :id="currentSkill.name" :value="currentSkill" v-model="query.skills">
-                <label :for="currentSkill.name">{{currentSkill.name}}</label>
-              </div>
-            </div>
-            <div class="form-group col">
-              <label>Qualification</label>
-              <div v-for="currentQualif in listQualif" :key="currentQualif._id">
-                <input type="checkbox" :id="currentQualif.name" :value="currentQualif" v-model="query.qualifications">
-                <label :for="currentQualif.name">{{currentQualif.name}}</label>
-              </div>
-            </div>
-          </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label>Hobbies</label>
+                            <div v-for="currentHobby in listHobbies" :key="currentHobby._id">
+                                <input type="checkbox" :id="currentHobby.name" :value="currentHobby" v-model="query.hobbies">
+                                <label :for="currentHobby.name">{{currentHobby.name}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group col">
+                            <label>Skills</label>
+                            <div v-for="currentSkill in listSkills" :key="currentSkill._id">
+                                <input type="checkbox" :id="currentSkill.name" :value="currentSkill" v-model="query.skills">
+                                <label :for="currentSkill.name">{{currentSkill.name}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group col">
+                            <label>Qualification</label>
+                            <div v-for="currentQualif in listQualif" :key="currentQualif._id">
+                                <input type="checkbox" :id="currentQualif.name" :value="currentQualif" v-model="query.qualifications">
+                                <label :for="currentQualif.name">{{currentQualif.name}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group col">
+                            <label>Choices</label><br>
+
+                            <input type="radio" id="Skills" value="Skills" v-model="query.code"/>
+                            <label for="Skills">Skills</label>
+                            <br>
+                            <input type="radio" id="Hobbies" value="Hobbies" v-model="query.code"/>
+                            <label for="Hobbies">Hobbies</label>
+                            <br>
+                            <input type="radio" id="Qualifications" value="Qualifications" v-model="query.code"/>
+                            <label for="Qualifications">Qualifications</label>
+                            <br>
+                            <input type="radio" id="SkillsHobbies" value="SkillsHobbies" v-model="query.code"/>
+                            <label for="SkillsHobbies">SkillsHobbies</label>
+                            <br>
+                            <input type="radio" id="SkillsQualifications" value="SkillsQualifications" v-model="query.code"/>
+                            <label for="SkillsQualifications">SkillsQualifications</label>
+                            <br>
+                            <input type="radio" id="HobbiesQualifications" value="HobbiesQualifications" v-model="query.code"/>
+                            <label for="HobbiesQualifications">HobbiesQualifications</label>
+                            <br>
+                            <input type="radio" id="SkillsHobbiesQualifications" value="SkillsHobbiesQualifications" v-model="query.code"/>
+                            <label for="SkillsHobbiesQualifications">SkillsHobbiesQualifications</label>
+                            <br>
+                        </div>
+                    </div>
 
           <button type="submit" class="btn btn-primary">Send query</button>
         </form>
@@ -67,60 +92,57 @@ export default {
       qualifications: [],
       code: ''
     },
-    listResult: []
+    listResult: [],
 
   }),
-  computed: {
-    ListUsers() {
-      return this.users.slice().reverse();
-    }
-  },
-  mounted() {
-    fetch(API_URL_USER)
-      .then(response => response.json())
-      .then((result) => {
-        this.users = result;
-      });
-    fetch(API_URL_HOBBY)
-      .then(response => response.json())
-      .then((result) => {
-        this.listHobbies = result;
-      });
-    fetch(API_URL_SKILL)
-      .then(response => response.json())
-      .then((result) => {
-        this.listSkills = result;
-      });
-    fetch(API_URL_QUALIF)
-      .then(response => response.json())
-      .then((result) => {
-        this.listQualif = result;
-      });
-  },
-  methods: {
-    searchUser() {
-      fetch(API_URL_USER_FILTER, {
-        method: "GET",
-        body: JSON.stringify(this.query),
-        headers: {
-          'content-type': 'application/json',
+        computed: {
+            ListUsers() {
+                return this.users.slice().reverse();
+            }
         },
-      })
-        .then(response => response.json())
-        .then((result) => {
-          if (result.details) {
-            // there was an error...
-            this.error = result.details
-              .map(detail => detail.user)
-              .join('. ');
-          } else {
-            this.error = '';
-            this.listResult.push(result);
-          }
-        });
-    },
-  },
-};
+        mounted() {
+            fetch(API_URL_USER)
+                .then(response => response.json())
+                .then(result => {
+                    this.users = result;
+                });
+            fetch(API_URL_HOBBY)
+                .then(response => response.json())
+                .then(result => {
+                    this.listHobbies = result;
+                });
+            fetch(API_URL_SKILL)
+                .then(response => response.json())
+                .then(result => {
+                    this.listSkills = result;
+                });
+            fetch(API_URL_QUALIF)
+                .then(response => response.json())
+                .then(result => {
+                    this.listQualif = result;
+                });
+        },
+        methods: {
+
+            searchUser() {
+              const valueToSearch = this.query;
+                console.log(this.query);
+                fetch(API_URL_USER_FILTER, {
+                    method: "POST",
+                    body: JSON.stringify(valueToSearch),
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        this.listResult = result;
+                        console.log(result);
+
+                    });
+            },
+        },
+    };
 </script>
 
 
