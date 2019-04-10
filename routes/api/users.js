@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const User = mongoose.model('User');
+const usersService = require('../../services/usersService');
 
 router.post('/', function(req, res, next){
     let user = new User();
@@ -31,6 +32,44 @@ router.get('/', function(req, res, next){
         return res.send(users);
     }).catch(next);
 
+});
+
+router.get('/filter', async function(req, res){
+    let result = {'status' : 'KO'};
+    switch (req.query.code) {
+        case "Skills":
+            result = await usersService.getBySkills(req.query.skills);
+            break;
+        case "Hobbies":
+            result = await usersService.getByHobbies(req.query.hobbies);
+            break;
+        case "Qualifications":
+            result = await usersService.getByQualifications(req.query.qualifications);
+            break;
+        case "SkillsHobbies":
+            result = await usersService.getBySkillsHobbies(req.query.skills, req.query.hobbies);
+            break;
+        case "SkillsQualifications":
+            result = await usersService.getBySkillsQualifications(req.query.skills, req.query.qualifications);
+            break;
+        case "HobbiesQualifications":
+            result = await usersService.getByHobbiesQualifications(req.query.hobbies, req.query.qualifications);
+            break;
+        case "SkillsHobbiesQualifications":
+            result = await usersService.getBySkillsHobbiesQualifications(
+                req.query.skills,
+                req.query.hobbies,
+                req.query.qualifications
+            );
+            break;
+        default:
+            break;
+    }
+    if (result.status  === "KO") {
+        return res.sendStatus(400);
+    } else {
+        return res.send(result.content);
+    }
 });
 
 router.get('/:userId', function(req, res, next){
