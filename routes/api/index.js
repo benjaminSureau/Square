@@ -8,6 +8,7 @@ router.use('/hobbies', require('./hobbies'));
 router.use('/skills', require('./skills'));
 router.use('/qualifications', require('./qualifications'));
 router.use('/jobs', require('./jobs'));
+router.use('/activityDomains', require('./activityDomains'));
 
 
 /*router.use('/profiles', require('./profiles'));

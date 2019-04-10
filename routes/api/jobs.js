@@ -11,9 +11,9 @@ router.post('/', function(req, res, next){
     job.grossWage = req.body.grossWage;
 
     if (typeof req.body.companyId !== 'undefined' &&
-        mongoose.Types.ObjectId.isValid(req.params.companyId))  {
-        Company.findById(req.body.companyId).then(function (res) {
-            if (!res) {
+        mongoose.Types.ObjectId.isValid(req.body.companyId))  {
+        Company.findById(req.body.companyId).then(function (result) {
+            if (!result) {
                 return res.sendStatus(400);
             }
             job.companyId = new Object(req.body.companyId);
