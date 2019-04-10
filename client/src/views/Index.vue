@@ -30,7 +30,10 @@
       </thead>
       <tbody>
       <tr v-for="currentHobby in ListHobbies" :key="currentHobby._id">
-        <td>{{currentHobby.name}}</td>
+        <td>
+          <input type="checkbox" :id="currentHobby.name" :value="currentHobby._id"/>
+          <label :for="currentHobby.name">{{currentHobby.name}}</label>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -117,7 +120,7 @@
               this.$router.push('about');
             } else {
               this.error = "";
-              this.hobbies.push(hobbyToAdd);
+              this.hobbies.push(result.hobby);
               this.$router.push('home');
               this.newHobby = '';
             }
