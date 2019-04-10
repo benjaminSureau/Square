@@ -23,7 +23,7 @@ To start the service execute this command :
 * ``docker-compose down`` -> Stop Process
 * ``docker-compose build`` -> Build the container
 * ``docker-compose up -d mongo`` -> Start Mongo DataBase
-* ``docker-compose up web`` -> Start Web Api
+* ``docker-compose up web`` -> Start Web Api And Web Client
 
 To delete the docker-compose : ``docker-compose rm``
 
