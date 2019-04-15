@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const Company = mongoose.model('Company');
+const companiesService = require('../../services/companiesService');
 
 router.post('/', function(req, res, next){
     let company = new Company();
@@ -37,6 +38,17 @@ router.get('/:companyId', function(req, res, next){
     } else {
         return res.sendStatus(400);
     }
+});
+
+router.get('/activitydomains', function(req, res){
+    let result = {'status' : 'KO'};
+    if (Array.isArray(req.query.activityDomains)) {
+        result = companiesService.getByActivityDomains(req.query.activityDomains);
+    }
+    if (result.status === 'KO') {
+        return res.sendStatus(400);
+    }
+    return res.send(result.content);
 });
 
 router.put('/:companyId', function(req, res, next){
