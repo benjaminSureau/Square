@@ -15,8 +15,8 @@ const Job = require('./models/Job');
     () => {console.log('Database connection is successful') },
     err => { console.log('Error when connecting to the database'+ err)}
 );*/
-mongoose.connect("mongodb://mongo:27017/Square", { useNewUrlParser: true });
-//mongoose.connect('mongodb://localhost:27017/Square', { useNewUrlParser: true });
+//mongoose.connect("mongodb://mongo:27017/Square", { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/Square', { useNewUrlParser: true });
 var app = express();
 app.use(cors());
 

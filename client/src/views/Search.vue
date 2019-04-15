@@ -14,21 +14,21 @@
                         <div class="form-group col">
                             <label>Hobbies</label>
                             <div v-for="currentHobby in listHobbies" :key="currentHobby._id">
-                                <input type="checkbox" :id="currentHobby.name" :value="currentHobby" v-model="query.hobbies">
+                                <input type="checkbox" :id="currentHobby.name" :value="currentHobby.name" v-model="query.hobbies">
                                 <label :for="currentHobby.name">{{currentHobby.name}}</label>
                             </div>
                         </div>
                         <div class="form-group col">
                             <label>Skills</label>
                             <div v-for="currentSkill in listSkills" :key="currentSkill._id">
-                                <input type="checkbox" :id="currentSkill.name" :value="currentSkill" v-model="query.skills">
+                                <input type="checkbox" :id="currentSkill.name" :value="currentSkill.name" v-model="query.skills">
                                 <label :for="currentSkill.name">{{currentSkill.name}}</label>
                             </div>
                         </div>
                         <div class="form-group col">
                             <label>Qualification</label>
                             <div v-for="currentQualif in listQualif" :key="currentQualif._id">
-                                <input type="checkbox" :id="currentQualif.name" :value="currentQualif" v-model="query.qualifications">
+                                <input type="checkbox" :id="currentQualif.name" :value="currentQualif.name" v-model="query.qualifications">
                                 <label :for="currentQualif.name">{{currentQualif.name}}</label>
                             </div>
                         </div>
@@ -126,13 +126,20 @@ export default {
 
             searchUser() {
               const valueToSearch = this.query;
-                console.log(this.query);
-                fetch(API_URL_USER_FILTER, {
-                    method: "POST",
-                    body: JSON.stringify(valueToSearch),
-                    headers: {
-                        "content-type": "application/json"
-                    }
+
+              var paramValue = {
+                skills: valueToSearch.skills,
+                hobbies: valueToSearch.hobbies,
+                qualifications: valueToSearch.qualifications,
+                code: valueToSearch.code
+              };
+              var url = new URL(API_URL_USER_FILTER),
+                params = paramValue
+              Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+                fetch(url,{
+                    method: "GET",
+
                 })
                     .then(response => response.json())
                     .then(result => {
