@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const Company = mongoose.model('Company');
 
 function getByActivityDomains(activityDomains) {
     return new Promise(function (resolve, reject) {
-        User.find({
+        Company.find({
             "activityDomains.name": {$in: activityDomains}
         }).
         sort({ name: -1 }).then(function (result) {

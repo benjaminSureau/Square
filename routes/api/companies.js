@@ -27,6 +27,15 @@ router.get('/', function(req, res, next){
 
 });
 
+router.get('/activitydomains', async function(req, res){
+    let result = {'status' : 'KO'};
+    result = await companiesService.getByActivityDomains(req.query.activityDomains);
+    if (result.status === 'KO') {
+        return res.sendStatus(400);
+    }
+    return res.send(result.content);
+});
+
 router.get('/:companyId', function(req, res, next){
     if (mongoose.Types.ObjectId.isValid(req.params.companyId)) {
         Company.findById(req.params.companyId).then(function (company) {
@@ -38,17 +47,6 @@ router.get('/:companyId', function(req, res, next){
     } else {
         return res.sendStatus(400);
     }
-});
-
-router.get('/activitydomains', function(req, res){
-    let result = {'status' : 'KO'};
-    if (Array.isArray(req.query.activityDomains)) {
-        result = companiesService.getByActivityDomains(req.query.activityDomains);
-    }
-    if (result.status === 'KO') {
-        return res.sendStatus(400);
-    }
-    return res.send(result.content);
 });
 
 router.put('/:companyId', function(req, res, next){
