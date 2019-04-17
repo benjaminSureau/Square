@@ -1,4 +1,4 @@
-###Requirements
+### Requirements
 
 Clone the project: ``git clone https://github.com/benjaminSureau/Square.git``.
 
@@ -16,7 +16,7 @@ Install nodejs dependencies ``npm install``
 
 Run the project ``npm start``
 
-###Docker
+### Docker
 
 To start the service execute this command :
 
@@ -29,7 +29,3 @@ To delete the docker-compose : ``docker-compose rm``
 
 Important : to use the container docker with node you must change the connection to mongo database :
 Change this line in app.js : ``mongoose.connect("mongodb://localhost:27017/Square")`` to ``mongoose.connect("mongodb://mongo:27017/Square")``
-
-
-###API
-
